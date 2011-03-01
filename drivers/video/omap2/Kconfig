@@ -1,0 +1,118 @@
+config FB_OMAP2
+        tristate "OMAP2/3 frame buffer support (EXPERIMENTAL)"
+        depends on FB && ARCH_OMAP
+
+        select FB_CFB_FILLRECT
+        select FB_CFB_COPYAREA
+        select FB_CFB_IMAGEBLIT
+	select FB_BACKLIGHT
+	select OMAP2_DSS
+        help
+          Frame buffer driver for OMAP2/3 based boards.
+
+config FB_OMAP2_DEBUG
+	bool "Debug support for OMAP2/3 FB"
+	default n
+	depends on FB_OMAP2
+	help
+	  Support for debug output. You have to enable the actual printing
+	  with debug module parameter.
+
+config FB_OMAP2_FORCE_AUTO_UPDATE
+	bool "Force main display to automatic update mode"
+	depends on FB_OMAP2
+	help
+	  Forces main display to automatic update mode (if possible),
+	  and also enables tearsync (if possible). By default
+	  displays that support manual update are started in manual
+	  update mode.
+
+config FB_OMAP2_NUM_FBS
+	int "Number of framebuffers"
+	range 1 3
+	default 1
+	depends on FB_OMAP2
+	help
+	  Select the number of framebuffers created. OMAP2/3 has 3 overlays
+	  so normally this would be 3.
+
+menu "OMAP2/3 Display Device Drivers"
+        depends on OMAP2_DSS
+
+config PANEL_GENERIC
+        tristate "Generic Panel"
+	default y
+        help
+	  Generic panel driver.
+	  Used for DVI output for Beagle and OMAP3 SDP.
+
+config PANEL_ARCHOS_HDMI
+	tristate "HDMI via DPI"
+	default y
+	help
+	  HDMI output via DPI interface on Archos Gen6 products
+	  
+choice
+	prompt "Resolution"
+	depends on PANEL_GENERIC || PANEL_ARCHOS_HDMI
+	default RES_480P
+
+config RES_480P
+	bool "Use 480P resolution"
+	help
+	  Select this option if you want to use the 480P (720x480)
+	  resolution on DVI output.
+
+config RES_576P
+	bool "Use 576P resolution"
+	depends on PANEL_ARCHOS_HDMI
+	
+config RES_720P
+	bool "Use 720P resolution"
+	help
+	  Select this option if you want to use the 720P (1280x720)
+	  resolution on DVI output.
+
+endchoice
+
+config PANEL_SHARP_LS037V7DW01
+        tristate "Sharp LS037V7DW01 LCD Panel"
+	default y
+        help
+          LCD Panel used in TI's SDP3430 and EVM boards
+
+config PANEL_N800
+        tristate "panel n800"
+        help
+          N800 LCD
+
+config CTRL_BLIZZARD
+        tristate "blizzard ctrl"
+        help
+          Blizzard Ctrl
+
+config PANEL_SAMSUNG_LMS480KC01
+	tristate "Samsung LMS480KC01 LCD Panel"
+	default y
+	help
+	  LCD Panel used in Archos Gen6 products
+
+config PANEL_ARCHOS_EXTDAC
+	tristate "EXTDAC via DPI"
+	help
+	  Pseudo panel modeling external ADV734x DAC found in
+	  DVR cradle 
+
+config PANEL_TPO_WVGA48
+	tristate "TPO WVGA48 LCD Panel"
+	default n
+	help
+	  LCD Panel used in Archos Gen6 products
+
+config PANEL_CPT_WVGA48
+	tristate "CPT WVGA48 LCD Panel"
+	default n
+	help
+	  LCD Panel used in Archos Gen7 products
+
+endmenu

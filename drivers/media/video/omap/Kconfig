@@ -1,0 +1,76 @@
+config VIDEO_OMAP_VIDEOLIB
+	tristate "OMAP Video out library"
+	depends on VIDEO_OMAP3
+	default VIDEO_OMAP3
+
+config VIDEO_OMAP_VIDEOOUT
+	tristate "OMAP Video out driver"
+	select VIDEOBUF_DMA_SG
+	select VIDEOBUF_GEN
+	depends on VIDEO_OMAP3
+	default VIDEO_OMAP3
+
+choice
+        prompt "VID1 Overlay manager"
+        depends on VIDEO_OMAP_VIDEOOUT
+        default VID1_LCD_MANAGER
+
+config VID1_TV_MANAGER
+        bool "Use TV Manager"
+        help
+          Select this option if you want VID1 pipeline on TV Overlay manager
+
+config VID1_LCD_MANAGER
+        bool "Use LCD Managaer"
+        help
+          Select this option if you want VID1 pipeline on LCD Overlay manager
+endchoice
+
+choice
+	prompt "VID2 Overlay manager"
+	depends on VIDEO_OMAP_VIDEOOUT
+	default VID2_LCD_MANAGER
+
+config VID2_TV_MANAGER
+	bool "Use TV Manager"
+	help
+	  Select this option if you want VID2 pipeline on TV Overlay manager
+
+config VID2_LCD_MANAGER
+	bool "Use LCD Managaer"
+	help
+	  Select this option if you want VID2 pipeline on LCD Overlay manager
+endchoice
+
+choice
+        prompt "TV Mode"
+        depends on VID2_TV_MANAGER || VID1_TV_MANAGER
+        default NTSC_M
+
+config NTSC_M
+        bool "Use NTSC_M mode"
+        help
+          Select this option if you want NTSC_M mode on TV
+
+config PAL_BDGHI
+        bool "Use PAL_BDGHI mode"
+        help
+          Select this option if you want PAL_BDGHI mode on TV
+
+endchoice
+
+config VIDEO_OMAP_RESZ
+	tristate "Omap Image Resizer"
+	help
+	  Support for Omap3430 builtin Image Resizer module
+
+	  To compile this driver a s a module, choose M here: the
+	  module will be called omap-resz.
+
+config VIDEO_OMAP_IMGDMA
+	tristate "Omap Image DMA"
+	help
+	  Support for fast 2D Image DMA using EDMA3 controller
+
+	  To compile this driver a s a module, choose M here: the
+	  module will be called omap-imgdma.

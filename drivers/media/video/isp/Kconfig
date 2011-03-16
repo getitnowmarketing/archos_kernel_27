@@ -1,0 +1,14 @@
+# Kconfig for OMAP3 ISP driver
+
+config VIDEO_OMAP34XX_ISP_PREVIEWER
+	tristate "OMAP ISP Previewer"
+	depends on !ARCH_OMAP3410
+
+config VIDEO_OMAP34XX_ISP_RESIZER
+	tristate "OMAP ISP Resizer"
+	depends on !ARCH_OMAP3410
+
+config VIDEO_OMAP34XX_TVP_ISP_GLUE
+        tristate "OMAP3 ISP <-> TVP514x (DVR) Glue"
+        select VIDEO_OMAP3
+        select VIDEO_TVP514X

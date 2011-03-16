@@ -1,0 +1,428 @@
+comment "OMAP Core Type"
+	depends on ARCH_OMAP2
+
+config ARCH_OMAP24XX
+	bool "OMAP24xx Based System"
+	depends on ARCH_OMAP2
+
+config ARCH_OMAP2420
+	bool "OMAP2420 support"
+	depends on ARCH_OMAP24XX
+	select OMAP_DM_TIMER
+	select ARCH_OMAP_OTG
+
+config ARCH_OMAP2430
+	bool "OMAP2430 support"
+	depends on ARCH_OMAP24XX
+	select ARCH_OMAP_OTG
+
+config ARCH_OMAP34XX
+	bool "OMAP34xx Based System"
+	depends on ARCH_OMAP3
+
+config ARCH_OMAP3430
+	bool "OMAP3430 support"
+	depends on ARCH_OMAP3 && ARCH_OMAP34XX
+	select ARCH_OMAP_OTG
+
+comment "OMAP Board Type"
+	depends on ARCH_OMAP2 || ARCH_OMAP3
+
+config MACH_OMAP_GENERIC
+	bool "Generic OMAP board"
+	depends on ARCH_OMAP2 && ARCH_OMAP24XX
+
+config MACH_NOKIA_N800
+	bool "Nokia N800"
+	depends on ARCH_OMAP2420
+	select VIDEO_TCM825X if VIDEO_OMAP2 && VIDEO_HELPER_CHIPS_AUTO
+	select CBUS if VIDEO_TCM825X
+	select CBUS_RETU if VIDEO_TCM825X
+	select MENELAUS if VIDEO_TCM825X
+	select OMAP_GPIO_SWITCH
+
+config MACH_NOKIA_N810
+	bool "Nokia N810"
+	depends on MACH_NOKIA_N800
+
+config MACH_NOKIA_N810_WIMAX
+	bool "Nokia N810 WiMAX"
+	depends on MACH_NOKIA_N800
+	select MACH_NOKIA_N810
+
+config MACH_OMAP2_TUSB6010
+	bool
+	depends on ARCH_OMAP2 && ARCH_OMAP2420
+	default y if MACH_NOKIA_N800
+
+config MACH_OMAP_H4
+	bool "OMAP 2420 H4 board"
+	depends on ARCH_OMAP2 && ARCH_OMAP2420
+	select OMAP_DEBUG_DEVICES
+	select GPIOEXPANDER_OMAP
+
+config MACH_OMAP_H4_TUSB
+	bool "TUSB 6010 EVM board"
+	depends on MACH_OMAP_H4
+	select MACH_OMAP2_TUSB6010
+	help
+	  Set this if you've got a TUSB6010 high speed USB board.
+	  You may need to consult the schematics for your revisions
+	  of the Menelaus and TUSB boards, and make changes to be
+	  sure this is set up properly for your board stack.
+
+	  Be sure to select OTG mode operation, not host-only or
+	  peripheral-only.
+
+config MACH_OMAP_H4_OTG
+	bool "Use USB OTG connector, not device connector (S1.10)"
+	depends on MACH_OMAP_H4
+	help
+	  Set this if you've set S1.10 (on the mainboard) to use the
+	  Mini-AB (OTG) connector and OTG transceiver with the USB0
+	  port, instead of the Mini-B ("download") connector with its
+	  non-OTG transceiver.
+
+	  Note that the "download" connector can be used to bootstrap
+	  the system from the OMAP mask ROM.  Also, since this is a
+	  development platform, you can also force the OTG port into
+	  a non-OTG operational mode.
+
+config MACH_OMAP2_H4_USB1
+	bool "Use USB1 port, not UART2 (S3.3)"
+	depends on MACH_OMAP_H4
+	help
+	  Set this if you've set SW3.3 (on the CPU card) so that the
+	  expansion connectors receive USB1 signals instead of UART2.
+
+config MACH_OMAP_APOLLON
+	bool "OMAP 2420 Apollon board"
+	depends on ARCH_OMAP2 && ARCH_OMAP2420
+
+config MACH_OMAP_2430SDP
+	bool "OMAP 2430 SDP board"
+	depends on ARCH_OMAP2 && ARCH_OMAP2430
+
+config MACH_OMAP_LDP
+	bool "OMAP3 LDP board"
+	depends on ARCH_OMAP3 && ARCH_OMAP34XX
+	select OMAP3_TVOUT
+	select OMAP3_TVOUT_DAC
+	
+config MACH_OMAP_ZOOM2
+	bool "OMAP3 ZOOM2 board"
+	depends on ARCH_OMAP3 && ARCH_OMAP34XX
+	select OMAP3_TVOUT
+	select OMAP3_TVOUT_DAC
+	
+config MACH_OMAP2EVM 
+	bool "OMAP 2530 EVM board"
+	depends on ARCH_OMAP2 && ARCH_OMAP24XX
+
+config MACH_OMAP_3430SDP
+	bool "OMAP 3430 SDP board"
+	depends on ARCH_OMAP3 && ARCH_OMAP34XX
+	select OMAP3_TVOUT
+	
+config MACH_OMAP3EVM
+	bool "OMAP 3530 EVM board"
+	depends on ARCH_OMAP3 && ARCH_OMAP34XX
+	select OMAP3_TVOUT
+
+config MACH_OMAP3_BEAGLE
+	bool "OMAP3 BEAGLE board"
+	depends on ARCH_OMAP3 && ARCH_OMAP34XX
+	select OMAP3_TVOUT
+	
+config MACH_OVERO
+	bool "Gumstix Overo board"
+	depends on ARCH_OMAP3 && ARCH_OMAP34XX
+
+config MACH_ARCHOS_G6H
+	bool "Archos G6H board"
+	depends on ARCH_OMAP3 && ARCH_OMAP34XX
+	select MACH_ARCHOS
+
+config MACH_ARCHOS_G6S
+	bool "Archos G6S board"
+	depends on ARCH_OMAP3 && ARCH_OMAP34XX
+	select MACH_ARCHOS
+
+config MACH_ARCHOS_A5S
+	bool "Archos A5S board"
+	depends on ARCH_OMAP3 && ARCH_OMAP34XX
+	select MACH_ARCHOS
+
+config MACH_ARCHOS_A5H
+	bool "Archos A5H board"
+	depends on ARCH_OMAP3 && ARCH_OMAP34XX
+	select MACH_ARCHOS
+
+config MACH_ARCHOS_A5ST
+	bool "Archos A5ST board"
+	depends on ARCH_OMAP3 && ARCH_OMAP34XX
+	select MACH_ARCHOS
+
+config MACH_ARCHOS
+	bool
+	select VIDEO_OMAP3_ISP if VIDEO_OMAP3_CAM
+	default n
+	
+config ARCHOS_FIXUP
+	bool "Fixup machine description of Archos boards"
+	depends on MACH_ARCHOS
+	default y if MACH_ARCHOS
+	
+config MACH_ARCHOS_CORE_DUMP
+	bool "Core dump support"
+	depends on MACH_ARCHOS
+	default n
+
+config MACH_ARCHOS_PRODTEST_MTD
+	bool "Prodtest MTD partition config"
+	depends on MACH_ARCHOS
+	default n
+
+config INTERCONNECT_IO_POSTING
+	bool "Enable bus posting for PIO accesses"
+	depends on ARCH_OMAP34XX
+	default n
+	---help---
+	  This option sets PIO access for internal OMAP3 registers to follow the
+	  ARMv7 DEVICE attribute. For 3430 this will allow posted writes in the
+	  interconnect. Software will need to synchronize writes to ensure
+	  completion. When not set the attribute is Strongly Ordered which is
+	  non-posted on the OMAP3 interconnect.
+
+config OMAP3_PM
+       bool "Enable TI OMAP Power Management"
+       depends on ARCH_OMAP3
+       default n
+
+choice
+	prompt "Choose Voltage Scale method"
+	depends on ARCH_OMAP34XX && OMAP3_PM
+	default OMAP_VOLT_VSEL
+
+config OMAP_VOLT_SR_BYPASS
+	bool "Voltage Scale via Smart Reflex in bypass"
+	depends on ARCH_OMAP3 && OMAP_SMARTREFLEX
+	help
+	Voltage scaling using direct register writes to OMAP3 voltage processor
+
+config OMAP_VOLT_SR
+	bool "Voltage scaling using Smart Reflex convergence"
+	depends on ARCH_OMAP3 && OMAP_SMARTREFLEX
+	help
+	Voltage scaling using error feedback on OMAP3 voltage processor
+
+config OMAP_VOLT_VSEL
+	bool "Voltage scaling using VSEL writes"
+	help
+	Voltage scaling by OMAP2/3 I2C writes to Triton2 power chip
+
+config OMAP_VOLT_VMODE
+	bool "Voltage scaling using VMODE pins"
+	help
+	Voltage scaling using by OMAP2/3 VMODE pin toggling
+endchoice
+
+choice
+	prompt "VDD1 OPP"
+	depends on ARCH_OMAP34XX && OMAP3_PM
+	default OMAP3ES2_VDD1_OPP1
+
+config OMAP3ES2_VDD1_OPP1
+	bool "MPU-125Mhz/DSP-90Mhz(OPP1)"
+	depends on ARCH_OMAP34XX
+	help
+	Select this option if you want to boot at OPP1.
+
+config OMAP3ES2_VDD1_OPP2
+	bool "MPU-250Mhz/DSP-180Mhz(OPP2)"
+	depends on ARCH_OMAP34XX
+	help
+	Select this option if you want to boot at OPP2.
+
+config OMAP3ES2_VDD1_OPP3
+	bool "MPU-500Mhz/DSP-360Mhz(OPP3)"
+	depends on ARCH_OMAP34XX
+	help
+	Select this option if you want to boot at OPP3.
+
+config OMAP3ES2_VDD1_OPP4
+	bool "MPU-550Mhz/DSP-396Mhz(OPP4)"
+	depends on ARCH_OMAP34XX
+	help
+	Select this option if you want to boot at OPP4.
+
+config OMAP3ES2_VDD1_OPP5
+	bool "MPU-600Mhz/DSP-430Mhz(OPP5)"
+	depends on ARCH_OMAP34XX
+	help
+	Select this option if you want to boot at OPP5.
+
+endchoice
+
+choice
+	prompt "Select Max Frequency for VDD2 OPP3"
+	depends on ARCH_OMAP34XX && OMAP3_PM
+	default OMAP3_CORE_166MHZ
+
+config OMAP3_CORE_133MHZ
+	bool "CORE at 133MHz"
+	depends on ARCH_OMAP34XX
+	help
+	Select this option to set Max CORE frequency to 133MHz (max DDR speed rating).
+
+config OMAP3_CORE_166MHZ
+	bool "CORE at 166MHz"
+	depends on ARCH_OMAP34XX
+	help
+	Select this option to set Max CORE frequency to 166MHz (max DDR speed rating)
+
+endchoice
+
+config OMAP3ES2_VDD2_OPP2
+	boolean
+
+config OMAP3ES2_VDD2_OPP3
+	boolean
+
+choice
+	prompt "VDD2 OPP"
+	depends on ARCH_OMAP34XX && OMAP3_PM
+	default OMAP3ES2_VDD2_OPP3
+
+config OMAP3ES2_VDD2_OPP2_L3_83MHZ
+	bool "L3 83MHz (OPP2)"
+	depends on ARCH_OMAP34XX && OMAP3_CORE_166MHZ
+	select OMAP3ES2_VDD2_OPP2
+	help
+	Select this option if you want to boot at VDD2 OPP2.
+
+config OMAP3ES2_VDD2_OPP3_L3_166MHZ
+	bool "L3 166MHz (OPP3)"
+	depends on ARCH_OMAP34XX && OMAP3_CORE_166MHZ
+	select OMAP3ES2_VDD2_OPP3
+	help
+	Select this option if you want to boot at VDD2 OPP3.
+
+config OMAP3ES2_VDD2_OPP2_L3_66MHZ
+	bool "L3 66MHz (OPP2)"
+	depends on ARCH_OMAP34XX && OMAP3_CORE_133MHZ
+	select OMAP3ES2_VDD2_OPP2
+	help
+	Select this option if you want to boot at VDD2 OPP2.
+
+config OMAP3ES2_VDD2_OPP3_L3_133MHZ
+	bool "L3 133MHz (OPP3)"
+	depends on ARCH_OMAP34XX && OMAP3_CORE_133MHZ
+	select OMAP3ES2_VDD2_OPP3
+	help
+	Select this option if you want to boot at VDD2 OPP3.
+
+endchoice
+
+config OMAP_TICK_GPTIMER
+	int "GPTIMER used for system tick timer"
+	depends on ARCH_OMAP2 || ARCH_OMAP3
+	range 1 12
+	default 1
+	help
+	  Linux uses one of the twelve on-board OMAP GPTIMER blocks to generate
+	  system tick interrupts.  The twelve GPTIMERs have slightly
+	  different powerdomain, source clock, and security properties
+	  (mostly documented in the OMAP3 TRMs) that can affect the selection
+	  of which GPTIMER to use.  The historical default is GPTIMER1.
+	  If CONFIG_OMAP_32K_TIMER is selected, Beagle may require GPTIMER12
+	  due to hardware sensitivity to glitches on the OMAP 32kHz clock
+	  input.
+
+config TRACK_RESOURCES
+	bool "Enable resource tracking"
+	depends on ARCH_OMAP34XX && OMAP3_PM
+	default n
+	---help---
+	This option enables tracking of resources such as clock and voltage sources.
+
+config  AUTO_POWER_DOMAIN_CTRL
+	bool "Enable automatic power domain control"
+	depends on ARCH_OMAP34XX && OMAP3_PM
+	default n
+	---help---
+	This option enables automatic control of power domains through the clock framework.
+
+config MPU_OFF
+	bool "Enable MPU off in suspend/resume and cpuidle"
+	depends on ARCH_OMAP34XX  && OMAP3_PM
+	default y
+	---help---
+	This option is for enabling MPU domain to go to OFF state in cpuidle and suspend/resume.
+
+config OMAP34XX_OFFMODE
+	bool "Enable OFF Mode for 3430"
+	depends on ARCH_OMAP34XX && OMAP3_PM
+	default y
+	---help---
+	This option enables all off modes frameworks and allows power domains to go to off with context save/restore.
+
+config OMAP34XX_OSWR
+       bool "Enable OSWR support for 3430"
+       depends on OMAP34XX_OFFMODE && OMAP3_PM
+       default y
+       ---help---
+       This option enables all the OSWR related C states in CPUidle
+
+config CORE_OFF
+	bool "Enable CORE off"
+	depends on MPU_OFF && OMAP34XX_OFFMODE && OMAP3_PM
+	---help---
+	This option is for enabling CORE domain to go to OFF state in suspend/resume.
+
+config CORE_OFF_CPUIDLE
+        bool "Enable CORE off in cpuidle"
+        depends on CORE_OFF
+        default y
+        ---help---
+        This option is for enabling CORE domain to go to OFF state in cpuidle
+
+config SYSOFFMODE
+        bool "Enable sysoff mode and VDD1/2 scaling to 0V"
+        depends on CORE_OFF
+        default n
+        ---help---
+        This option is for enabling sysoffmode when chip off happens
+
+config HW_SUP_TRANS
+	bool "OMAP3430 enable H/W supervised transition for clock domains"
+	depends on ARCH_OMAP3 && ARCH_OMAP34XX && OMAP3_PM
+	default y
+
+config DISABLE_EMUDOMAIN_CONTROL
+	bool "Disable h/w supervised control of EMU clock domain"
+	depends on ARCH_OMAP34XX && OMAP3_PM
+	default y
+	---help---
+	This option is for disabling h/w supervised control of EMU clock domain. Required for debugging using JTAG.
+
+config ENABLE_SWLATENCY_MEASURE
+	bool "Enable the sleep and wake latency measurement."
+	depends on ARCH_OMAP34XX && OMAP3_PM
+	default n
+	---help---
+	This option is for enabling the sleep and wakeup latency measurement in OSIdle.
+
+config HS_SERIAL_SUPPORT
+	bool "High speed serial support"
+	depends on ARCH_OMAP && (ARCH_OMAP24XX || ARCH_OMAP34XX)
+	default y
+	---help---
+	  Select this option while using high speed UART support
+
+config ENABLE_OFF_MODE_JTAG_ETM_DEBUG
+	bool "Enable hardware emulation context save and restore"
+	depends on ARCH_OMAP34XX && OMAP3_PM
+	default n
+	---help---
+	This option enables JTAG & ETM debugging across power states.  With out this option emulation features are reset across OFF mode state changes.
